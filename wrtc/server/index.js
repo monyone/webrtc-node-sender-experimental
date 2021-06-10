@@ -63,6 +63,10 @@ if (options.input == null || options.input === '-' || options.input === 'pipe:0'
 ffmpeg
   .inputOptions([
     `-re`,
+    `-analyzeduration 500000`,
+    `-fflags nobuffer`,
+    `-max_delay 250000`,
+    `-threads 0`,
     `-hwaccel ${options.accel || 'none'}`
   ])
   .output(`unix://${videoSocketPath}`)
