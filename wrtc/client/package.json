@@ -1,0 +1,20 @@
+{
+  "name": "webrtc-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^5.2.0",
+    "process": "^0.11.10",
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0"
+  },
+  "dependencies": {
+    "simple-peer": "^9.9.3"
+  }
+}
