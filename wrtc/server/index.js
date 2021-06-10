@@ -23,7 +23,8 @@ program
   .option('-h, --height <pixel>', 'ffmpeg input path', 540)
   .option('-s, --sample_rate <freq>', 'ffmpeg sample rate', 48000)
   .option('-c, --audio_channel <ch>', 'ffmpeg audio channel', 2)
-  .option('-w, --signaling_port <ch>', 'signaling port', 9000);;
+  .option('-w, --signaling_port <ch>', 'signaling port', 9000)
+  .option('-a, --accel <name>', 'hardware decoding');
 
 program.parse(process.argv);
 const options = program.opts();
@@ -62,7 +63,7 @@ if (options.input == null || options.input === '-' || options.input === 'pipe:0'
 ffmpeg
   .inputOptions([
     `-re`,
-    `-hwaccel auto`,
+    `-hwaccel ${options.accel || 'none'}`
   ])
   .output(`unix://${videoSocketPath}`)
   .outputOptions([
