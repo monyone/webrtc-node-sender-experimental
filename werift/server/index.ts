@@ -7,7 +7,7 @@ import {
 import { Server } from "ws";
 import { createSocket } from "dgram";
 
-const server = new Server({ port: 8888 });
+const server = new Server({ port: 9000 });
 const videoServer = createSocket("udp4");
 videoServer.bind(5000);
 const audioServer = createSocket("udp4");

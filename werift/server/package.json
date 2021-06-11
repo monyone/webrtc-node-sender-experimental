@@ -4,7 +4,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev server.ts"
+    "start": "ts-node-dev index.ts"
   },
   "dependencies": {
     "werift": "^0.9.3",
