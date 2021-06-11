@@ -1,0 +1,50 @@
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Client</title>
+  </head>
+  <body>
+    <div>
+      <video
+        autoplay
+        muted
+        playsinline
+        id="video"
+        style="background-color: black;"
+      ></video>
+    </div>
+    <script>
+      (async () => {
+        const socket = new WebSocket(`ws://${location.hostname}:9000`);
+        await new Promise((r) => (socket.onopen = r));
+
+        const offer = await new Promise(
+          (r) => (socket.onmessage = (ev) => r(JSON.parse(ev.data)))
+        );
+
+        const peer = new RTCPeerConnection({
+          iceServers: [],
+        });
+        peer.onicecandidate = ({ candidate }) => {
+          if (candidate) {
+            socket.send(JSON.stringify(candidate));
+          }
+        };
+
+        const video = document.getElementById("video");
+        const media = new MediaStream();
+        video.srcObject = media;
+        peer.ontrack = async (e) => {
+          e.streams.flatMap((stream) => stream.getTracks()).forEach((track) => {
+            media.addTrack(track);
+          })
+        };
+
+        await peer.setRemoteDescription(offer);
+        await peer.setLocalDescription(await peer.createAnswer());
+        socket.send(JSON.stringify(peer.localDescription));
+      })();
+    </script>
+  </body>
+</html>
+
