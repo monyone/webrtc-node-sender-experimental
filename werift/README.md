@@ -15,6 +15,20 @@ ffmpeg -f mpegts -fflags nobuffer -analyzeduration 1000000 -max_delay 250000 -i 
     -vn -c:a copy -f rtp rtp://127.0.0.1:5002
 ```
 
+
+Raspberry Pi 4 で h264_omx でのハードウェアエンコードを行う場合はこうなる。
+
+```bash
+something ... \
+ffmpeg -fflags nobuffer -analyzeduration 500000 -max_delay 250000 -i - \
+    -c:v h264_omx -b:v 3M -profile:v baseline -flags:v +global_header \
+    -c:a opus -strict -2 -ar 48000 -ac 2 -application lowdelay \
+    -f mpegts pipe:1 | \
+ffmpeg -f mpegts -fflags nobuffer -analyzeduration 1000000 -max_delay 250000 -i - \
+    -an -c:v copy -f rtp rtp://127.0.0.1:5000 \
+    -vn -c:a copy -f rtp rtp://127.0.0.1:5002
+```
+
 ## サーバ側準備
 
 server 側で yarn start
