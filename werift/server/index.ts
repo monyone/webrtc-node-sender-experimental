@@ -26,6 +26,11 @@ server.on("connection", async (socket) => {
             { type: "nack", parameter: "pli" },
             { type: "goog-remb" },
           ],
+          parameters: {
+            'profile-level-id': '42e01f',
+            'level-asymmetry-allowed': 1,
+            'packetization-mode': 1,
+          },
         }),
       ],
       audio: [
