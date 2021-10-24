@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev index.ts"
+  },
+  "dependencies": {
+    "arib-mpeg2ts-parser": "^3.0.9",
+    "werift": "^0.9.3",
+    "ws": "^7.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^15.0.1",
+    "@types/ws": "^7.4.2",
+    "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.6",
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4"
+  },
+  "private": true
+}
