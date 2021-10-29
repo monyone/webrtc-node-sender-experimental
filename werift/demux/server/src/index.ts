@@ -99,10 +99,6 @@ class TSPESExtractor extends Writable {
                    if (decoded === 'Opus') {
                      this.opusPid = elementary_PID;
                    }
-                } else if(descriptor_tag === 0x7F) {
-                   const channel_config_code = PMT[descriptor + 3];
-                   console.log(descriptor_length + 2, channel_config_code);
-                   console.log();
                 }
 
                 descriptor += 2 + descriptor_length;
@@ -251,14 +247,6 @@ class TSPESExtractor extends Writable {
 
 process.stdin.pipe(new TSPESExtractor());
 
-const audioServer = createSocket("udp4");
-audioServer.bind(5000);
-audioServer.on('message', (rtp) => {
-  const packet = RtpPacket.deSerialize(rtp);
-  console.log(packet);
-})
-
-
 const server = new Server({ port: 9000 });
 server.on("connection", async (socket) => {
   const pc = new RTCPeerConnection({
@@ -309,12 +297,6 @@ server.on("connection", async (socket) => {
         //console.log(packet);
         videoTrack.writeRtp(rtp);
       });
-
-      audioServer.on('message', (rtp) => {
-        const packet = RtpPacket.deSerialize(rtp);
-        //console.log(packet);
-        //audioTrack.writeRtp(rtp);        
-      })
 
       emitter.on('audio', (rtp) => {
         const packet = RtpPacket.deSerialize(rtp);
